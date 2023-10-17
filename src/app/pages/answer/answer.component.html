@@ -1,0 +1,17 @@
+<div class="form">
+  <div *ngFor="let q of questionList">
+    <p><b>{{q.question}} {{q.require? "*" : ''}}</b></p>
+    <p *ngIf="q.type == 'text'">
+      {{q.value}}
+    </p>
+    <p *ngIf="q.type == 'checkbox'">
+      <ng-container *ngFor="let item of q.value">
+        <p>{{item}}</p>
+      </ng-container>
+
+    </p>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="back()">Back</button>
+
+</div>
