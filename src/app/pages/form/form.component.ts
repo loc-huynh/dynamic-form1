@@ -46,6 +46,7 @@ export class FormComponent {
     //   type: "text"
     // },
   ];
+  public errorMessage: any[] = [];
 
   addNewModalOpen(): void {
     this.dialog.open(FormModalComponent, { disableClose: true }).afterClosed().subscribe(res => {
@@ -66,11 +67,34 @@ export class FormComponent {
       this.questionList[i]['value'].push(answer);
     }
   }
+  
+  async validateInfo(infors: any[]): Promise<boolean> {
+    let res=true;
+    this.errorMessage = [];
+    for (const info of infors) {
+      if (info.require) {
+        if (info.type === 'checkbox') {
+          if (!info.value || info.value.length === 0 || (info.value.includes('other') && !info.valueOther)) {
+            this.errorMessage.push(`field ${info.question} is required. Plz answer the question.`);
+            res = false;
+          }
+        } else if (info.type === 'text') {
+          if (!info.value) {
+            this.errorMessage.push(`field ${info.question} is required. Plz answer the question.`);
+            res = false;
+          }
+        }
+      }
+    }
+    return res;
   }
 
-  review() {
-    this.StoreService.store.next(this.questionList);
-    this.router.navigate(['/form/answer']);
+  async review() {
+    const isValid = await this.validateInfo(this.questionList);
+    if(isValid) {
+      this.StoreService.store.next(this.questionList);
+      this.router.navigate(['/form/answer']);
+    }
   }
 
 }

@@ -10,6 +10,10 @@
       </ng-container>
 
     </p>
+    <p *ngIf="q.value?.includes('other')" class="example-full-width">
+        {{ q.valueOther }}
+    </p>
+
   </div>
 
   <button mat-raised-button color="primary" (click)="back()">Back</button>
