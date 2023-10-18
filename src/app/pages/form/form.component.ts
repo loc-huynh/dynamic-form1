@@ -49,16 +49,23 @@ export class FormComponent {
 
   addNewModalOpen(): void {
     this.dialog.open(FormModalComponent, { disableClose: true }).afterClosed().subscribe(res => {
-      this.questionList.push(res);
-
+      if(res) {
+        this.questionList.push(res);
+      }
     });
   }
 
   changeValue(i: number, answer: string) {
-    let value = this.questionList[i]['value'];
-    if (!value) this.questionList[i]['value'] = [];
-    // let index = this.questionList[i]['value'].findIndex(i => i == answer)
-    this.questionList[i]['value'].push(answer);
+    if (!Array.isArray(this.questionList[i]['value'])) this.questionList[i]['value'] = [];
+
+    // TODO: should find by id instead
+    const itemIndex = this.questionList[i]['value'].findIndex((val: string) => val === answer)
+    if (itemIndex !== -1) {
+      this.questionList[i]['value'].splice(itemIndex, 1);
+    } else {
+      this.questionList[i]['value'].push(answer);
+    }
+  }
   }
 
   review() {
