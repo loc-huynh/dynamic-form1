@@ -16,14 +16,20 @@
           (change)="changeValue(i, option.option)">{{option.option}}</mat-checkbox>
       </div>
 
-      <mat-checkbox *ngIf="q.other" [checked]="q.value?.includes('Other')" class="example-margin"
-        (change)="changeValue(i, 'Other')">Other </mat-checkbox>
-      <mat-form-field *ngIf="q.value?.includes('Other')" class="example-full-width">
+      <mat-checkbox *ngIf="q.other" [checked]="q.value?.includes('other')" class="example-margin"
+        (change)="changeValue(i, 'other')">Other </mat-checkbox>
+      <mat-form-field *ngIf="q.value?.includes('other')" class="example-full-width">
         <mat-label>Type quesion here</mat-label>
         <input matInput [(ngModel)]="q.valueOther">
       </mat-form-field>
 
     </ng-container>
+  </div>
+
+  <div class="error-message-container">
+      <p *ngFor="let msg of errorMessage">
+        {{ msg }}
+      </p>
   </div>
 
 
