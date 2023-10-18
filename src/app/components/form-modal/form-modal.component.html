@@ -36,7 +36,7 @@
         </div>
       </div>
 
-      <button mat-button color="primary" (click)="addAnswerOption()">Add another answer</button>
+      <button mat-button color="primary" [disabled]="form.controls['answerOptions'].length >= 5" (click)="addAnswerOption()">Add another answer</button>
       <div>
         <mat-checkbox class="example-margin" [checked]="form.controls['other'].value"
           (change)="changeCheckbox('other')">Allow user to specify their own answer</mat-checkbox>
@@ -49,5 +49,6 @@
   </form>
 </div>
 <div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button mat-dialog-close cdkFocusInitial [disabled]="!form.valid" (click)="submit()">Submit</button>
 </div>
